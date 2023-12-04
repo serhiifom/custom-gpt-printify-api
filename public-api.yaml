@@ -1,0 +1,2728 @@
+openapi: 3.0.3
+info:
+  title: 'Printify API'
+  version: 1.0.0
+servers:
+  -
+    url: 'https://api.printify.com/v1'
+    description: 'Printify API'
+paths:
+  /shops.json:
+    get:
+      tags:
+        - Shops
+      summary: 'List shops'
+      description: 'Retrieve a list of existing shops in a Printify account'
+      operationId: getShopsList
+      responses:
+        '200':
+          description: 'List of shops'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Shop'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+    parameters:
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/connection.json':
+    delete:
+      tags:
+        - Shops
+      summary: 'Disconnect shop'
+      description: 'Disconnect a shop from a Printify account'
+      operationId: disconnectShop
+      responses:
+        '200':
+          description: 'Shop disconnected'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/authorization'
+  /catalog/blueprints.json:
+    get:
+      tags:
+        - Catalog
+      summary: 'List blueprints'
+      description: 'Retrieve a list of blueprints'
+      operationId: getBlueprintsList
+      responses:
+        '200':
+          description: 'List of blueprints'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Blueprint'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+    parameters:
+      -
+        $ref: '#/components/parameters/authorization'
+  '/catalog/blueprints/{blueprint_id}.json':
+    get:
+      tags:
+        - Catalog
+      summary: 'Get blueprint details'
+      description: 'Retrieve blueprint details by ID'
+      operationId: getBlueprintById
+      responses:
+        '200':
+          description: 'Blueprint details'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blueprint'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/blueprintId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/catalog/blueprints/{blueprint_id}/print_providers.json':
+    get:
+      tags:
+        - Catalog
+      summary: 'List print providers for blueprint'
+      description: 'Retrieve a list of print providers that fulfill orders for the specified blueprint'
+      operationId: getBlueprintPrintProvidersList
+      responses:
+        '200':
+          description: 'List of print providers that fulfill orders for the specified blueprint'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BlueprintPrintProvider'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/blueprintId'
+      -
+        $ref: '#/components/parameters/authorization'
+  /catalog/print_providers.json:
+    get:
+      tags:
+        - Catalog
+      summary: 'List print providers'
+      description: 'Retrieve a list of print providers'
+      operationId: getPrintProvidersList
+      responses:
+        '200':
+          description: 'List of print providers'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrintProviderListItem'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+    parameters:
+      -
+        $ref: '#/components/parameters/authorization'
+  '/catalog/print_providers/{print_provider_id}.json':
+    get:
+      tags:
+        - Catalog
+      summary: 'Get print provider''s details'
+      description: 'Retrieve print provider''s details by ID'
+      operationId: getPrintProviderById
+      responses:
+        '200':
+          description: 'Print provider details'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintProviderDetails'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/printProviderId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/catalog/blueprints/{blueprint_id}/print_providers/{print_provider_id}/variants.json':
+    get:
+      tags:
+        - Catalog
+      summary: 'List blueprint variants for print provider'
+      description: 'Retrieve a list of all variants of a blueprint from a specific print provider'
+      operationId: getBlueprintVariantsList
+      parameters:
+        -
+          name: show-out-of-stock
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - '0'
+              - '1'
+      responses:
+        '200':
+          description: 'List of all variants of a blueprint from a specific print provider'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintPrintProviderVariant'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/blueprintId'
+      -
+        $ref: '#/components/parameters/printProviderId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/catalog/blueprints/{blueprint_id}/print_providers/{print_provider_id}/shipping.json':
+    get:
+      tags:
+        - Catalog
+      summary: 'Get shipping information'
+      description: 'Retrieve the shipping information for all variants of a blueprint from a specific print provider'
+      operationId: getBlueprintShipping
+      responses:
+        '200':
+          description: 'Shipping information for all variants of a blueprint from a specific print provider'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintPrintProviderShipping'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/blueprintId'
+      -
+        $ref: '#/components/parameters/printProviderId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/products.json':
+    get:
+      tags:
+        - Products
+      summary: 'List products'
+      description: 'Retrieve the list of products in the specified shop'
+      operationId: getProductsList
+      parameters:
+        -
+          $ref: '#/components/parameters/page'
+        -
+          $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: 'List of products'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopProducts'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    post:
+      tags:
+        - Products
+      summary: 'Create a product'
+      description: 'Create a new product'
+      operationId: createProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProduct'
+      responses:
+        '200':
+          description: 'Created product'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/products/{product_id}.json':
+    get:
+      tags:
+        - Products
+      summary: 'Get product details'
+      description: 'Retrieve product details by ID'
+      operationId: getProductById
+      responses:
+        '200':
+          description: Product
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    put:
+      tags:
+        - Products
+      summary: 'Update a product'
+      description: 'Update an existing product by ID'
+      operationId: updateProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatedProduct'
+      responses:
+        '200':
+          description: 'Updated product'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    delete:
+      tags:
+        - Products
+      summary: 'Delete a product'
+      description: 'Delete a product by ID'
+      operationId: deleteProduct
+      responses:
+        '200':
+          description: 'Product deleted'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/productId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/products/{product_id}/publish.json':
+    post:
+      tags:
+        - Products
+      summary: 'Publish a product'
+      description: 'Publish a product by ID'
+      operationId: publishProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishProductSettings'
+      responses:
+        '200':
+          description: 'Product published'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/productId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/products/{product_id}/publishing_succeeded.json':
+    post:
+      tags:
+        - Products
+      summary: 'Set product publish status to succeeded'
+      description: 'Set product publish status to succeeded'
+      operationId: setProductPublishingSucceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductPublishingSucceeded'
+      responses:
+        '200':
+          description: 'Product publish status set to succeeded'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/productId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/products/{product_id}/publishing_failed.json':
+    post:
+      tags:
+        - Products
+      summary: 'Set product publish status to failed'
+      description: 'Set product publish status to failed'
+      operationId: setProductPublishingFailed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductPublishingFailed'
+      responses:
+        '200':
+          description: 'Product publish status set to failed'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/productId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/products/{product_id}/unpublish.json':
+    post:
+      tags:
+        - Products
+      summary: 'Unpublish a product'
+      description: 'Unpublish a product by ID'
+      operationId: unpublishProduct
+      responses:
+        '200':
+          description: 'Product unpublished'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/productId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/orders.json':
+    get:
+      tags:
+        - Orders
+      summary: 'List of orders'
+      description: 'Retrieve a list of orders in a specified shop'
+      operationId: getOrdersList
+      parameters:
+        -
+          $ref: '#/components/parameters/page'
+        -
+          $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: 'List of orders'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopOrders'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    post:
+      tags:
+        - Orders
+      summary: 'Create an order'
+      description: 'Create a new order'
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewOrder'
+      responses:
+        '200':
+          description: 'Created order'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedOrder'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/orders/{order_id}.json':
+    get:
+      tags:
+        - Orders
+      summary: 'Get order details'
+      description: 'Retrieve order details by ID'
+      operationId: getOrderById
+      responses:
+        '200':
+          description: 'Order details'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/orderId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/orders/{order_id}/send_to_production.json':
+    post:
+      tags:
+        - Orders
+      summary: 'Send order to production'
+      description: 'Send order to production'
+      operationId: sendOrderToProduction
+      responses:
+        '200':
+          description: 'Order sent to production'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/orderId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/orders/shipping.json':
+    post:
+      tags:
+        - Orders
+      summary: 'Calculate shipping cost'
+      description: 'Calculate the shipping cost based on an order details'
+      operationId: calculateOrderShipping
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewOrder'
+      responses:
+        '200':
+          description: 'Shipping cost'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculatedShippingCost'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/orders/{order_id}/cancel.json':
+    post:
+      tags:
+        - Orders
+      summary: 'Cancel an order'
+      description: 'Cancel an order'
+      operationId: cancelOrder
+      responses:
+        '200':
+          description: 'Canceled order'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/orderId'
+      -
+        $ref: '#/components/parameters/authorization'
+  /uploads.json:
+    get:
+      tags:
+        - Uploads
+      summary: 'List of files'
+      description: 'Retrieve a list of uploaded files'
+      operationId: getUploadsList
+      parameters:
+        -
+          $ref: '#/components/parameters/page'
+        -
+          $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: 'Uploaded files'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Uploads'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+    parameters:
+      -
+        $ref: '#/components/parameters/authorization'
+  '/uploads/{image_id}.json':
+    get:
+      tags:
+        - Uploads
+      summary: 'Get file details'
+      description: 'Retrieve uploaded file details'
+      operationId: getUploadById
+      responses:
+        '200':
+          description: 'Uploaded file details'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadedImage'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/imageId'
+      -
+        $ref: '#/components/parameters/authorization'
+  /uploads/images.json:
+    post:
+      tags:
+        - Uploads
+      summary: 'Upload an image'
+      description: 'Upload an image'
+      operationId: uploadImage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                -
+                  $ref: '#/components/schemas/NewImageFromUrl'
+                -
+                  $ref: '#/components/schemas/NewImageFromContent'
+      responses:
+        '200':
+          description: 'Uploaded image'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadedImage'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+    parameters:
+      -
+        $ref: '#/components/parameters/authorization'
+  '/uploads/{image_id}/archive.json':
+    post:
+      tags:
+        - Uploads
+      summary: 'Archive an uploaded file'
+      description: 'Archive an uploaded file'
+      operationId: archiveUpload
+      responses:
+        '200':
+          description: 'File archived'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/imageId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/webhooks.json':
+    get:
+      tags:
+        - Webhooks
+      summary: 'List of webhooks'
+      description: 'Retrieve a list of webhooks in a specified shop'
+      operationId: getWebhooksList
+      responses:
+        '200':
+          description: 'List of webhooks'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Webhook'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    post:
+      tags:
+        - Webhooks
+      summary: 'Create a webhook'
+      description: 'Create a webhook'
+      operationId: createWebhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewWebhook'
+      responses:
+        '200':
+          description: 'Created webhook'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/authorization'
+  '/shops/{shop_id}/webhooks/{webhook_id}.json':
+    put:
+      tags:
+        - Webhooks
+      summary: 'Update a webhook'
+      description: 'Update an existing webhook by ID'
+      operationId: updateWebhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatedWebhook'
+      responses:
+        '200':
+          description: 'Webhook details'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    delete:
+      tags:
+        - Webhooks
+      summary: 'Delete a webhook'
+      description: 'Delete a webhook by ID'
+      operationId: deleteWebhook
+      responses:
+        '200':
+          description: 'Deleted webhook'
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            x-pfy-correlation-id:
+              $ref: '#/components/headers/PfyCorrelationID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedWebhook'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '429':
+          $ref: '#/components/responses/ErrorTooManyRequests'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+    parameters:
+      -
+        $ref: '#/components/parameters/shopId'
+      -
+        $ref: '#/components/parameters/webhookId'
+      -
+        $ref: '#/components/parameters/authorization'
+components:
+  schemas:
+    ErrorBadRequest:
+      properties:
+        status:
+          type: string
+          enum:
+            - error
+        code:
+          type: integer
+          format: int64
+          example: 8150
+        message:
+          type: string
+          example: 'Validation failed.'
+        errors:
+          properties:
+            reason:
+              type: string
+              example: 'print_areas: The print areas field is required.'
+            code:
+              type: integer
+              format: int64
+              example: 8150
+          type: object
+      type: object
+    ErrorUnauthorized:
+      properties:
+        error:
+          type: string
+          example: Unauthenticated.
+      type: object
+    ErrorForbidden:
+      properties:
+        error:
+          type: string
+          example: 'Invalid scope(s) provided.'
+      type: object
+    ErrorTooManyRequests:
+      properties:
+        error:
+          type: string
+          example: 'Too Many Attempts.'
+      type: object
+    ErrorNotFound:
+      properties:
+        error:
+          type: string
+          example: 'Not found'
+      type: object
+    Shop:
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1234567
+        title:
+          type: string
+          example: 'My first shop'
+        sales_channel:
+          type: string
+          enum:
+            - shopify
+            - etsy
+            - woocommerce
+            - ebay
+            - wix
+            - presta_shop
+            - big_commerce
+            - custom_integration
+      type: object
+    ProductOptionBase:
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          size: '#/components/schemas/ProductOptionSize'
+          color: '#/components/schemas/ProductOptionColor'
+    ProductOptionSize:
+      properties:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductOptionSizeValue'
+      type: object
+      example:
+        name: Sizes
+        type: size
+        values:
+          -
+            id: 14
+            title: S
+          -
+            id: 15
+            title: M
+          -
+            id: 16
+            title: L
+      allOf:
+        -
+          $ref: '#/components/schemas/ProductOptionBase'
+    ProductOptionSizeValue:
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 14
+        title:
+          type: string
+          example: S
+      type: object
+    ProductOptionColor:
+      properties:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductOptionColorValue'
+      type: object
+      example:
+        name: Colors
+        type: color
+        values:
+          -
+            id: 1233
+            title: White
+            colors:
+              - '#F9F9F9'
+      allOf:
+        -
+          $ref: '#/components/schemas/ProductOptionBase'
+    ProductOptionColorValue:
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1233
+        title:
+          type: string
+          example: White
+        colors:
+          type: array
+          items:
+            type: string
+            example: '#f9f9f9'
+      type: object
+    ProductVariant:
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 12345
+        sku:
+          type: string
+          example: SKU-123
+        cost:
+          description: 'In 1/100th of a currency unit, for example: cents'
+          type: integer
+          format: int64
+          example: 1200
+        price:
+          description: 'In 1/100th of a currency unit, for example: cents'
+          type: integer
+          format: int64
+          example: 1700
+        title:
+          type: string
+          example: 'Antique Sapphire / S'
+        grams:
+          description: 'Weight in grams for a product variant'
+          type: integer
+          format: int64
+          example: 120
+        is_enabled:
+          type: boolean
+        is_default:
+          type: boolean
+        is_available:
+          type: boolean
+        options:
+          type: array
+          items:
+            type: integer
+            example: 15
+        quantity:
+          type: integer
+          format: int64
+          example: 1
+      type: object
+    ProductImage:
+      properties:
+        src:
+          type: string
+          format: uri
+          example: 'https://example.com/image.png'
+        variant_ids:
+          type: array
+          items:
+            type: integer
+            example: 12345
+        position:
+          type: string
+          example: front
+        is_default:
+          type: boolean
+      type: object
+    ProductPrintArea:
+      properties:
+        variant_ids:
+          type: array
+          items:
+            type: integer
+            example: 12345
+        placeholders:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrintAreaPlaceholder'
+        background:
+          type: string
+          example: '#ffffff'
+      type: object
+    ProductPrintAreaPlaceholder:
+      properties:
+        position:
+          type: string
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrintAreaPlaceholderImage'
+      type: object
+    ProductPrintAreaPlaceholderImage:
+      properties:
+        id:
+          description: 'Uploaded image ID'
+          type: string
+          example: 5e16d66791287a0006e522b2
+        name:
+          description: 'Name of the file'
+          type: string
+          example: my-image.png
+        type:
+          description: 'MIME type of the image'
+          type: string
+          example: image/png
+        height:
+          type: integer
+          example: 2500
+        width:
+          type: integer
+          example: 5000
+        x:
+          description: 'Float value to position an image on the X axis'
+          type: number
+          format: float
+        'y':
+          description: 'Float value to position an image on the Y axis'
+          type: number
+          format: float
+        scale:
+          description: 'Float value to scale image up or down'
+          type: number
+          format: float
+        angle:
+          description: 'Integer value used to rotate image'
+          type: integer
+          format: int64
+      type: object
+    Product:
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          example: bfd8310b9f332e1243c7fffe9
+        title:
+          type: string
+          example: 'My custom t-shirt'
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+            example: T-shirts
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductOptionBase'
+          example:
+            -
+              name: Colors
+              type: color
+              values:
+                -
+                  id: 1233
+                  title: White
+                  colors: ['#F9F9F9']
+            -
+              name: Sizes
+              type: size
+              values:
+                -
+                  id: 14
+                  title: S
+                -
+                  id: 15
+                  title: M
+                -
+                  id: 16
+                  title: L
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariant'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImage'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        visible:
+          type: boolean
+        is_locker:
+          type: boolean
+        blueprint_id:
+          type: integer
+          format: int64
+          example: 123
+        user_id:
+          type: integer
+          format: int64
+          example: 12345678
+        shop_id:
+          type: integer
+          format: int64
+          example: 1234567
+        print_provider_id:
+          type: integer
+          format: int64
+          example: 123
+        print_areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrintArea'
+        sales_channel_properties:
+          type: array
+          items:
+            type: object
+      type: object
+    Blueprint:
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 6
+        title:
+          type: string
+          example: 'Unisex Heavy Cotton Tee'
+        description:
+          type: string
+          example: 'The unisex heavy cotton tee is the basic staple of any wardrobe. It is the foundation upon which casual fashion grows.'
+        brand:
+          type: string
+          example: Gildan
+        model:
+          type: string
+          example: '5000'
+        images:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'https://images.printify.com/6283a8e2ccd06b6aca008479'
+      type: object
+    BlueprintPrintProvider:
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 3
+        title:
+          type: string
+          example: 'Print on Demand'
+      type: object
+    PrintProviderListItem:
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 60
+        title:
+          type: string
+          example: 'Print on Demand'
+        location:
+          $ref: '#/components/schemas/PrintProviderLocation'
+      type: object
+    PrintProviderLocation:
+      properties:
+        address1:
+          type: string
+          example: '108 West 13th Street'
+        address2:
+          type: string
+          example: ''
+        city:
+          type: string
+          example: Wilmington
+        country:
+          type: string
+          example: US
+        region:
+          type: string
+          example: DE
+        zip:
+          type: string
+          example: '19801'
+      type: object
+    PrintProviderDetails:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/PrintProviderListItem'
+        -
+          properties:
+            blueprints:
+              type: array
+              items:
+                $ref: '#/components/schemas/PrintProviderBlueprint'
+          type: object
+    PrintProviderBlueprint:
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 6
+        title:
+          type: string
+          example: 'Unisex Heavy Cotton Tee'
+        brand:
+          type: string
+          example: Gildan
+        model:
+          type: string
+          example: '5000'
+        images:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'https://images.printify.com/6283a8e2ccd06b6aca008479'
+      type: object
+    ShippingCost:
+      properties:
+        cost:
+          description: 'In 1/100th of a currency unit, for example: cents'
+          type: integer
+          format: int64
+          example: 850
+        currency:
+          description: 'Currency code (ISO 4217)'
+          type: string
+          example: USD
+      type: object
+    BlueprintPrintProviderShipping:
+      properties:
+        handling_time:
+          $ref: '#/components/schemas/BlueprintPrintProviderShippingHandlingTime'
+        profiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintPrintProviderShippingProfile'
+      type: object
+    BlueprintPrintProviderShippingHandlingTime:
+      properties:
+        value:
+          type: integer
+          format: int64
+          example: 2
+        unit:
+          type: string
+          example: day
+      type: object
+    BlueprintPrintProviderShippingProfile:
+      properties:
+        variant_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+            example: 11814
+        first_item:
+          $ref: '#/components/schemas/ShippingCost'
+        additional_items:
+          $ref: '#/components/schemas/ShippingCost'
+        countries:
+          type: array
+          items:
+            anyOf:
+              -
+                type: string
+                example: US
+              -
+                type: string
+                enum:
+                  - REST_OF_THE_WORLD
+      type: object
+    BlueprintPrintProviderVariant:
+      properties:
+        id:
+          description: 'Print provider''s ID'
+          type: integer
+          format: int64
+          example: 217
+        title:
+          description: 'Print provider''s name'
+          type: string
+          example: 'Print On Demand'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintPrintProviderVariantItem'
+      type: object
+    BlueprintPrintProviderVariantItem:
+      properties:
+        id:
+          description: 'Variant''s ID'
+          type: integer
+          format: int64
+          example: 11814
+        title:
+          type: string
+          example: 'Antique Sapphire / S'
+        options:
+          $ref: '#/components/schemas/BlueprintPrintProviderVariantItemOptions'
+        placeholders:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintPrintProviderVariantItemPlaceholder'
+      type: object
+    BlueprintPrintProviderVariantItemOptions:
+      type: object
+      example:
+        color: 'Antique Sapphire'
+        size: S
+      additionalProperties:
+        type: string
+    BlueprintPrintProviderVariantItemPlaceholder:
+      properties:
+        position:
+          description: 'Position states the available printable areas for a blueprint fulfilled by a specific print provider'
+          type: string
+          example: front
+        height:
+          description: 'Height in pixels'
+          type: integer
+          format: int64
+          example: 5000
+        width:
+          description: 'Width in pixels'
+          type: integer
+          format: int64
+          example: 2500
+      type: object
+    PaginatedEnvelope:
+      properties:
+        current_page:
+          type: integer
+          format: int64
+          minimum: 1
+        first_page_url:
+          description: 'Relative link to the first page of the response'
+          type: string
+          example: '/?page=1'
+        from:
+          description: 'Index of the first item on the current response page'
+          type: integer
+          format: int64
+          example: 1
+        last_page:
+          description: 'Number of the last page of the response'
+          type: integer
+          format: int64
+          example: 10
+        last_page_url:
+          description: 'Relative link to the last page of the response'
+          type: string
+          example: '/?page=10'
+        next_page_url:
+          description: 'Relative link to the next page of the response'
+          type: string
+          example: '/?page=2'
+          nullable: true
+        path:
+          type: string
+          example: /
+        per_page:
+          description: 'Number of items returned per page of the response'
+          type: integer
+          format: int64
+          default: 10
+          maximum: 100
+          minimum: 1
+          example: 10
+        prev_page_url:
+          description: 'Relative link to the previous page of the response'
+          type: string
+          example: '/?page=1'
+          nullable: true
+        to:
+          description: 'Index of the last item on the current response page'
+          type: integer
+          format: int64
+          example: 10
+        total:
+          description: 'Total number of items in the response'
+          type: integer
+          format: int64
+          example: 100
+      type: object
+    ShopProducts:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/PaginatedEnvelope'
+        -
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Product'
+    ProductRequestBase:
+      properties:
+        title:
+          type: string
+          example: 'My custom t-shirt'
+        description:
+          type: string
+          example: 'The unisex heavy cotton tee is the basic staple of any wardrobe. It is the foundation upon which casual fashion grows.'
+        blueprint_id:
+          type: integer
+          format: int64
+          example: 123
+        print_provider_id:
+          type: integer
+          format: int64
+          example: 123
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewProductVariant'
+        print_areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewProductPrintArea'
+      type: object
+    NewProduct:
+      required:
+        - title
+        - description
+        - blueprint_id
+        - print_provider_id
+        - variants
+        - print_areas
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/ProductRequestBase'
+    NewProductVariant:
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 12345
+        price:
+          description: 'In 1/100th of a currency unit, for example: cents'
+          type: integer
+          format: int64
+          example: 1400
+        is_enabled:
+          type: boolean
+      type: object
+    NewProductPrintArea:
+      properties:
+        variant_ids:
+          type: array
+          items:
+            type: integer
+            example: 12345
+        placeholders:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewProductPrintAreaPlaceholder'
+      type: object
+    NewProductPrintAreaPlaceholder:
+      properties:
+        position:
+          description: 'Position states the available printable areas for a blueprint fulfilled by a specific print provider'
+          type: string
+          example: front
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewProductPrintAreaPlaceholderImage'
+      type: object
+    NewProductPrintAreaPlaceholderImage:
+      required:
+        - id
+        - x
+        - 'y'
+        - scale
+        - angle
+      properties:
+        id:
+          description: 'Uploaded image ID'
+          type: string
+          example: 5d15ca551163cde90d7b2203
+        x:
+          description: 'Float value to position an image on the X axis'
+          type: number
+          format: float
+        'y':
+          description: 'Float value to position an image on the Y axis'
+          type: number
+          format: float
+        scale:
+          description: 'Float value to scale image up or down'
+          type: number
+          format: float
+        angle:
+          description: 'Integer value used to rotate image'
+          type: integer
+          format: int64
+      type: object
+    UpdatedProduct:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/ProductRequestBase'
+    PublishProductSettings:
+      required:
+        - title
+        - description
+        - images
+        - variants
+        - tags
+      properties:
+        title:
+          type: boolean
+        description:
+          type: boolean
+        images:
+          type: boolean
+        variants:
+          type: boolean
+        tags:
+          type: boolean
+      type: object
+    ProductPublishingSucceeded:
+      required:
+        - external
+      properties:
+        external:
+          $ref: '#/components/schemas/ProductPublishingSucceededExternal'
+      type: object
+    ProductPublishingSucceededExternal:
+      properties:
+        id:
+          description: 'External ID'
+          type: string
+          example: 5941187eb8e7e37b3f0e62e5
+        handle:
+          description: 'External URL to the product'
+          type: string
+          format: uri
+          example: 'https://example.com/path/to/product'
+      type: object
+    ProductPublishingFailed:
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+          example: 'Request timed out'
+      type: object
+    ShopOrders:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/PaginatedEnvelope'
+        -
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Order'
+    Order:
+      properties:
+        id:
+          type: string
+          example: 1337e11d4a3f630515108aa8
+        shop_id:
+          type: integer
+          format: int64
+          example: 1234567
+        address_to:
+          $ref: '#/components/schemas/OrderAddress'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLineItem'
+        metadata:
+          $ref: '#/components/schemas/OrderMetadata'
+        total_price:
+          description: 'In 1/100th of a currency unit, for example: cents'
+          type: integer
+          format: int64
+          example: 5000
+        total_shipping:
+          description: 'In 1/100th of a currency unit, for example: cents'
+          type: integer
+          format: int64
+          example: 2000
+        total_tax:
+          description: 'In 1/100th of a currency unit, for example: cents'
+          type: integer
+          format: int64
+          example: 5000
+        status:
+          type: string
+          enum:
+            - pending
+            - on-hold
+            - cancelled
+            - ready-for-production
+            - sending-to-production
+            - in-production
+            - checking-quality
+            - quality-declined
+            - quality-approved
+            - fulfilled
+            - partially-fulfilled
+            - payment-not-received
+            - callback-received
+            - has-issues
+        shipping_method:
+          description: '1 - standard shipping, 2 - express shipping'
+          type: integer
+          format: int64
+          enum:
+            - 1
+            - 2
+        created_at:
+          type: string
+          format: date-time
+          example: '2022-06-29 11:00:00+0000'
+        sent_to_production_at:
+          type: string
+          format: date-time
+          example: '2022-06-29 11:00:00+0000'
+        fulfillment_type:
+          type: string
+          enum:
+            - ordinary
+            - prioritised
+      type: object
+    OrderMetadata:
+      properties:
+        order_type:
+          type: string
+          enum:
+            - sample
+            - external
+            - manual
+            - api
+            - csv-import-tool
+        shop_fulfilled_at:
+          description: 'RFC3339 datetime, `1970-01-01 00:00:00+00:00` if not fulfilled yet'
+          type: string
+          format: date-time
+          example: '2022-06-29 11:00:00+0000'
+      type: object
+    OrderAddress:
+      properties:
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Smith
+        email:
+          type: string
+          format: email
+          example: example@example.com
+        phone:
+          type: string
+          example: '+555555555555'
+        address1:
+          type: string
+          example: '108 West 13th Street'
+        address2:
+          type: string
+          example: ''
+        city:
+          type: string
+          example: Wilmington
+        country:
+          type: string
+          example: US
+        region:
+          type: string
+          example: DE
+        zip:
+          type: string
+          example: '19801'
+        company:
+          type: string
+          example: 'Printify, Inc.'
+          nullable: true
+      type: object
+    OrderLineItem:
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          example: 1
+        product_id:
+          type: string
+          example: bfd8310b9f332e1243c7fffe9
+        variant_id:
+          type: integer
+          format: int64
+          example: 12345
+        print_provider_id:
+          type: integer
+          format: int64
+          example: 123
+        shipping_cost:
+          description: 'In 1/100th of a currency unit, for example: cents'
+          type: integer
+          format: int64
+          example: 289
+        cost:
+          description: 'In 1/100th of a currency unit, for example: cents'
+          type: integer
+          format: int64
+          example: 1489
+        status:
+          type: string
+          enum:
+            - in-production
+            - bulk-in-production
+            - fulfilled
+            - canceled
+            - out_of_stock
+            - discontinued
+            - shipment_pre_transit
+            - shipment_in_transit
+            - shipment_out_for_delivery
+            - shipment_delivered
+            - shipment_return_to_sender
+            - shipment_failure
+            - shipment_cancelled
+            - shipment_error
+        metadata:
+          $ref: '#/components/schemas/OrderLineItemMetadata'
+        sent_to_production_at:
+          type: string
+          format: date-time
+          example: '2022-06-29 11:00:00+0000'
+      type: object
+    OrderLineItemMetadata:
+      properties:
+        title:
+          type: string
+          example: 'My custom t-shirt'
+        price:
+          type: integer
+          format: int64
+          example: 2000
+        variant_label:
+          type: string
+          example: 'Antique Sapphire / S'
+        sku:
+          type: string
+          example: '12345678900987654321'
+        country:
+          description: 'Country of origin'
+          type: string
+          example: Canada
+      type: object
+    NewOrder:
+      required:
+        - external_id
+        - line_items
+        - shipping_method
+        - send_shipping_notification
+        - address_to
+      properties:
+        external_id:
+          description: 'A unique string identifier from the sales channel specifying the order name or ID'
+          type: string
+          example: 2750e210-39bb-11e9-a503-452618153e4a
+        label:
+          description: 'Optional value to specify order label instead of using `external_id`'
+          type: string
+          example: '00012'
+        line_items:
+          type: array
+          items:
+            oneOf:
+              -
+                $ref: '#/components/schemas/NewOrderLineItemProductVariant'
+              -
+                $ref: '#/components/schemas/NewOrderLineItemSku'
+        shipping_method:
+          description: 'Required to specify what method of shipping is desired. 1 - standard shipping, 2 - express shipping'
+          type: integer
+          format: int64
+          enum:
+            - 1
+            - 2
+        send_shipping_notification:
+          description: 'A boolean for choosing whether or not to receive email notifications after an order is shipped'
+          type: boolean
+        address_to:
+          type: object
+          allOf:
+            -
+              $ref: '#/components/schemas/OrderAddress'
+            -
+              required:
+                - first_name
+                - last_name
+                - email
+                - country
+                - address1
+                - city
+      type: object
+    NewOrderLineItemProductVariant:
+      required:
+        - product_id
+        - variant_id
+        - quantity
+      properties:
+        product_id:
+          type: string
+          example: bfd8310b9f332e1243c7fffe9
+        variant_id:
+          type: integer
+          format: int64
+          example: 12345
+        quantity:
+          type: integer
+          format: int64
+          example: 1
+        print_areas:
+          oneOf:
+            -
+              $ref: '#/components/schemas/NewOrderLineItemProductVariantPrintAreaMap'
+            -
+              type: array
+              items:
+                $ref: '#/components/schemas/NewOrderLineItemProductVariantPrintAreaListItem'
+        print_details:
+          $ref: '#/components/schemas/NewOrderLineItemProductVariantPrintDetails'
+      type: object
+    NewOrderLineItemProductVariantPrintAreaMap:
+      type: object
+      example:
+        front: 'https://example.com/image.png'
+      additionalProperties:
+        type: string
+    NewOrderLineItemProductVariantPrintAreaListItem:
+      required:
+        - src
+        - x
+        - 'y'
+        - scale
+        - angle
+      properties:
+        src:
+          type: string
+          format: uri
+          example: 'https://example.com/image.png'
+        x:
+          type: number
+          format: float
+          example: 1.37
+        'y':
+          type: number
+          format: float
+          example: 1.37
+        scale:
+          type: number
+          format: float
+          example: 0.5
+        angle:
+          description: 'Integer value used to rotate image'
+          type: integer
+          format: int64
+          example: 45
+      type: object
+    NewOrderLineItemProductVariantPrintDetails:
+      properties:
+        print_on_side:
+          type: string
+          enum:
+            - regular
+            - mirror
+        separator_type:
+          description: 'Required with `separator_color` and specific to clock type blueprints'
+          type: string
+          enum:
+            - Numbers
+            - Lines
+            - None
+        separator_color:
+          description: 'Required with `separator_type` and specific to clock type blueprints. Value must be a valid string hexadecimal color code'
+          type: string
+          example: '#f100ff'
+      type: object
+    NewOrderLineItemSku:
+      required:
+        - sku
+        - quantity
+      properties:
+        sku:
+          type: string
+          example: my_sku
+        quantity:
+          type: integer
+          format: int64
+          example: 1
+      type: object
+    CreatedOrder:
+      properties:
+        id:
+          type: string
+          example: 1337e11d4a3f630515108aa8
+      type: object
+    CalculatedShippingCost:
+      properties:
+        standard:
+          description: 'In 1/100th of a currency unit, for example: cents'
+          type: integer
+          format: int64
+          example: 2000
+        express:
+          description: 'In 1/100th of a currency unit, for example: cents'
+          type: integer
+          format: int64
+          example: 2500
+      type: object
+    UploadedImage:
+      properties:
+        id:
+          type: string
+          example: 5e16d66791287a0006e522b2
+        file_name:
+          type: string
+          example: image.png
+        height:
+          type: integer
+          format: int64
+          example: 1024
+        width:
+          type: integer
+          format: int64
+          example: 2048
+        size:
+          description: 'File size in bytes'
+          type: integer
+          format: int64
+          example: 1048576
+        mime_type:
+          description: 'MIME type of the image'
+          type: string
+          example: image/png
+        preview_url:
+          type: string
+          format: uri
+          example: 'https://example.com/image.png'
+        upload_time:
+          description: 'Date-time in format: YYYY-MM-DD HH:MM:SS'
+          type: string
+          example: '2022-06-29 11:00:00'
+      type: object
+    Uploads:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/PaginatedEnvelope'
+        -
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/UploadedImage'
+    NewImageFromUrl:
+      required:
+        - file_name
+        - url
+      properties:
+        file_name:
+          type: string
+          example: image.png
+        url:
+          description: 'External link to the image'
+          type: string
+          format: uri
+          example: 'https://example.com/image.png'
+      type: object
+    NewImageFromContent:
+      required:
+        - file_name
+        - content
+      properties:
+        file_name:
+          type: string
+          example: image.png
+        content:
+          description: 'Base64-encoded image content'
+          type: string
+          format: byte
+          example: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkuSb4HwADvQHsFOrs9QAAAABJRU5ErkJggg==
+      type: object
+    Webhook:
+      properties:
+        id:
+          type: string
+          example: 5e16d66791287a0006e133b2
+        shop_id:
+          type: integer
+          format: int64
+          example: 1234567
+        url:
+          description: 'Target URL for the webhook'
+          type: string
+          format: uri
+          example: 'https://example.com/webhook/order_created'
+        topic:
+          description: 'Name of the event'
+          type: string
+          enum:
+            - 'shop:disconnected'
+            - 'product:deleted'
+            - 'product:publish:started'
+            - 'order:created'
+            - 'order:updated'
+            - 'order:sent-to-production'
+            - 'order:shipment:created'
+            - 'order:shipment:delivered'
+          example: 'order:created'
+      type: object
+    NewWebhook:
+      required:
+        - topic
+        - url
+      properties:
+        topic:
+          description: 'Name of the event'
+          type: string
+          enum:
+            - 'shop:disconnected'
+            - 'product:deleted'
+            - 'product:publish:started'
+            - 'order:created'
+            - 'order:updated'
+            - 'order:sent-to-production'
+            - 'order:shipment:created'
+            - 'order:shipment:delivered'
+          example: 'order:created'
+        url:
+          description: 'Target URL for the webhook'
+          type: string
+          format: uri
+          example: 'https://example.com/webhook/order_created'
+      type: object
+    UpdatedWebhook:
+      required:
+        - url
+      properties:
+        url:
+          description: 'Target URL for the webhook'
+          type: string
+          format: uri
+          example: 'https://example.com/webhook/order_created'
+      type: object
+    DeletedWebhook:
+      properties:
+        id:
+          type: string
+          example: 5e16d66791287a0006e133b2
+      type: object
+  responses:
+    ErrorBadRequest:
+      description: 'The request did not pass validation'
+      headers:
+        x-ratelimit-limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        x-ratelimit-remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        x-pfy-correlation-id:
+          $ref: '#/components/headers/PfyCorrelationID'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBadRequest'
+    ErrorUnauthorized:
+      description: 'Accessing a protected resource without authorization or with invalid credentials'
+      headers:
+        x-ratelimit-limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        x-ratelimit-remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        x-pfy-correlation-id:
+          $ref: '#/components/headers/PfyCorrelationID'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorUnauthorized'
+    ErrorForbidden:
+      description: 'Accessing a protected resource with API credentials that don''t have access to that resource'
+      headers:
+        x-ratelimit-limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        x-ratelimit-remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        x-pfy-correlation-id:
+          $ref: '#/components/headers/PfyCorrelationID'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorForbidden'
+    ErrorTooManyRequests:
+      description: 'Too Many Requests response status code indicates you have sent too many requests in a given amount of time ("rate limiting")'
+      headers:
+        x-ratelimit-limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        x-ratelimit-remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        x-pfy-correlation-id:
+          $ref: '#/components/headers/PfyCorrelationID'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorTooManyRequests'
+    ErrorNotFound:
+      description: 'Route or resource is not found. This error is returned when the request hits an undefined route, or if the resource doesn''t exist (e.g. has been deleted)'
+      headers:
+        x-ratelimit-limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        x-ratelimit-remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        x-pfy-correlation-id:
+          $ref: '#/components/headers/PfyCorrelationID'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorNotFound'
+    ErrorInternalServerError:
+      description: 'The server encountered an unexpected condition'
+      headers:
+        x-ratelimit-limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        x-ratelimit-remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        x-pfy-correlation-id:
+          $ref: '#/components/headers/PfyCorrelationID'
+      content:
+        application/json:
+          schema:
+            type: object
+  parameters:
+    shopId:
+      name: shop_id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+        example: 1234567
+    blueprintId:
+      name: blueprint_id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+        example: 123
+    printProviderId:
+      name: print_provider_id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+        example: 123
+    productId:
+      name: product_id
+      in: path
+      required: true
+      schema:
+        type: string
+        example: bfd8310b9f332e1243c7fffe9
+    orderId:
+      name: order_id
+      in: path
+      required: true
+      schema:
+        type: string
+        example: 1337e11d4a3f630515108aa8
+    imageId:
+      name: image_id
+      in: path
+      required: true
+      schema:
+        type: string
+        example: 5e16d66791287a0006e522b2
+    webhookId:
+      name: webhook_id
+      in: path
+      required: true
+      schema:
+        type: string
+        example: 5e16d66791287a0006e133b2
+    page:
+      name: page
+      in: query
+      description: 'Paginate through the list of results'
+      required: false
+      schema:
+        type: integer
+        format: int64
+        default: 1
+    limit:
+      name: limit
+      in: query
+      description: 'Results per page'
+      required: false
+      schema:
+        type: integer
+        format: int64
+        default: 10
+        maximum: 100
+        minimum: 1
+    authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      example: 'Bearer abc123'
+  headers:
+    RateLimitRemaining:
+      description: 'Number of remaining allowed requests in the current time frame'
+      schema:
+        type: integer
+        format: int64
+        example: 599
+    RateLimitLimit:
+      description: 'Total number of allowed requests per time frame'
+      schema:
+        type: integer
+        format: int64
+        example: 600
+    PfyCorrelationID:
+      description: 'Unique request ID. Please send us this header''s value if you want to ask us for assistance with a specific request'
+      schema:
+        type: string
+        example: 9954c642-f10b-41a8-9ee8-60ece005c658
