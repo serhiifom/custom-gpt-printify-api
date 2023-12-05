@@ -2329,74 +2329,6 @@ components:
           format: byte
           example: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkuSb4HwADvQHsFOrs9QAAAABJRU5ErkJggg==
       type: object
-    Webhook:
-      properties:
-        id:
-          type: string
-          example: 5e16d66791287a0006e133b2
-        shop_id:
-          type: integer
-          format: int64
-          example: 1234567
-        url:
-          description: 'Target URL for the webhook'
-          type: string
-          format: uri
-          example: 'https://example.com/webhook/order_created'
-        topic:
-          description: 'Name of the event'
-          type: string
-          enum:
-            - 'shop:disconnected'
-            - 'product:deleted'
-            - 'product:publish:started'
-            - 'order:created'
-            - 'order:updated'
-            - 'order:sent-to-production'
-            - 'order:shipment:created'
-            - 'order:shipment:delivered'
-          example: 'order:created'
-      type: object
-    NewWebhook:
-      required:
-        - topic
-        - url
-      properties:
-        topic:
-          description: 'Name of the event'
-          type: string
-          enum:
-            - 'shop:disconnected'
-            - 'product:deleted'
-            - 'product:publish:started'
-            - 'order:created'
-            - 'order:updated'
-            - 'order:sent-to-production'
-            - 'order:shipment:created'
-            - 'order:shipment:delivered'
-          example: 'order:created'
-        url:
-          description: 'Target URL for the webhook'
-          type: string
-          format: uri
-          example: 'https://example.com/webhook/order_created'
-      type: object
-    UpdatedWebhook:
-      required:
-        - url
-      properties:
-        url:
-          description: 'Target URL for the webhook'
-          type: string
-          format: uri
-          example: 'https://example.com/webhook/order_created'
-      type: object
-    DeletedWebhook:
-      properties:
-        id:
-          type: string
-          example: 5e16d66791287a0006e133b2
-      type: object
   responses:
     ErrorBadRequest:
       description: 'The request did not pass validation'
@@ -2522,13 +2454,6 @@ components:
       schema:
         type: string
         example: 5e16d66791287a0006e522b2
-    webhookId:
-      name: webhook_id
-      in: path
-      required: true
-      schema:
-        type: string
-        example: 5e16d66791287a0006e133b2
     page:
       name: page
       in: query
