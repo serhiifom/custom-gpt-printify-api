@@ -38,9 +38,6 @@ paths:
           $ref: '#/components/responses/ErrorTooManyRequests'
         '500':
           $ref: '#/components/responses/ErrorInternalServerError'
-    parameters:
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/connection.json':
     delete:
       tags:
@@ -75,8 +72,6 @@ paths:
     parameters:
       -
         $ref: '#/components/parameters/shopId'
-      -
-        $ref: '#/components/parameters/authorization'
   /catalog/blueprints.json:
     get:
       tags:
@@ -108,9 +103,6 @@ paths:
           $ref: '#/components/responses/ErrorTooManyRequests'
         '500':
           $ref: '#/components/responses/ErrorInternalServerError'
-    parameters:
-      -
-        $ref: '#/components/parameters/authorization'
   '/catalog/blueprints/{blueprint_id}.json':
     get:
       tags:
@@ -145,8 +137,6 @@ paths:
     parameters:
       -
         $ref: '#/components/parameters/blueprintId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/catalog/blueprints/{blueprint_id}/print_providers.json':
     get:
       tags:
@@ -216,9 +206,6 @@ paths:
           $ref: '#/components/responses/ErrorTooManyRequests'
         '500':
           $ref: '#/components/responses/ErrorInternalServerError'
-    parameters:
-      -
-        $ref: '#/components/parameters/authorization'
   '/catalog/print_providers/{print_provider_id}.json':
     get:
       tags:
@@ -301,8 +288,6 @@ paths:
         $ref: '#/components/parameters/blueprintId'
       -
         $ref: '#/components/parameters/printProviderId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/catalog/blueprints/{blueprint_id}/print_providers/{print_provider_id}/shipping.json':
     get:
       tags:
@@ -339,8 +324,6 @@ paths:
         $ref: '#/components/parameters/blueprintId'
       -
         $ref: '#/components/parameters/printProviderId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/products.json':
     get:
       tags:
@@ -417,8 +400,6 @@ paths:
     parameters:
       -
         $ref: '#/components/parameters/shopId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/products/{product_id}.json':
     get:
       tags:
@@ -522,8 +503,6 @@ paths:
         $ref: '#/components/parameters/shopId'
       -
         $ref: '#/components/parameters/productId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/products/{product_id}/publish.json':
     post:
       tags:
@@ -567,8 +546,6 @@ paths:
         $ref: '#/components/parameters/shopId'
       -
         $ref: '#/components/parameters/productId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/products/{product_id}/publishing_succeeded.json':
     post:
       tags:
@@ -612,8 +589,6 @@ paths:
         $ref: '#/components/parameters/shopId'
       -
         $ref: '#/components/parameters/productId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/products/{product_id}/publishing_failed.json':
     post:
       tags:
@@ -657,8 +632,6 @@ paths:
         $ref: '#/components/parameters/shopId'
       -
         $ref: '#/components/parameters/productId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/products/{product_id}/unpublish.json':
     post:
       tags:
@@ -697,8 +670,6 @@ paths:
         $ref: '#/components/parameters/shopId'
       -
         $ref: '#/components/parameters/productId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/orders.json':
     get:
       tags:
@@ -711,6 +682,8 @@ paths:
           $ref: '#/components/parameters/page'
         -
           $ref: '#/components/parameters/limit'
+        -
+          $ref: '#/components/parameters/shopId'
       responses:
         '200':
           description: 'List of orders'
@@ -776,8 +749,6 @@ paths:
     parameters:
       -
         $ref: '#/components/parameters/shopId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/orders/{order_id}.json':
     get:
       tags:
@@ -814,8 +785,6 @@ paths:
         $ref: '#/components/parameters/shopId'
       -
         $ref: '#/components/parameters/orderId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/orders/{order_id}/send_to_production.json':
     post:
       tags:
@@ -854,8 +823,6 @@ paths:
         $ref: '#/components/parameters/shopId'
       -
         $ref: '#/components/parameters/orderId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/orders/shipping.json':
     post:
       tags:
@@ -898,8 +865,6 @@ paths:
     parameters:
       -
         $ref: '#/components/parameters/shopId'
-      -
-        $ref: '#/components/parameters/authorization'
   '/shops/{shop_id}/orders/{order_id}/cancel.json':
     post:
       tags:
@@ -938,8 +903,6 @@ paths:
         $ref: '#/components/parameters/shopId'
       -
         $ref: '#/components/parameters/orderId'
-      -
-        $ref: '#/components/parameters/authorization'
   /uploads.json:
     get:
       tags:
@@ -974,9 +937,6 @@ paths:
           $ref: '#/components/responses/ErrorTooManyRequests'
         '500':
           $ref: '#/components/responses/ErrorInternalServerError'
-    parameters:
-      -
-        $ref: '#/components/parameters/authorization'
   '/uploads/{image_id}.json':
     get:
       tags:
@@ -1011,8 +971,6 @@ paths:
     parameters:
       -
         $ref: '#/components/parameters/imageId'
-      -
-        $ref: '#/components/parameters/authorization'
   /uploads/images.json:
     post:
       tags:
@@ -1054,9 +1012,6 @@ paths:
           $ref: '#/components/responses/ErrorInternalServerError'
         '400':
           $ref: '#/components/responses/ErrorBadRequest'
-    parameters:
-      -
-        $ref: '#/components/parameters/authorization'
   '/uploads/{image_id}/archive.json':
     post:
       tags:
@@ -1093,8 +1048,6 @@ paths:
     parameters:
       -
         $ref: '#/components/parameters/imageId'
-      -
-        $ref: '#/components/parameters/authorization'
 components:
   schemas:
     ErrorBadRequest:
