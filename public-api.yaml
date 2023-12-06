@@ -69,14 +69,14 @@ paths:
           $ref: '#/components/responses/ErrorInternalServerError'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      - name: shop_id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 1234567
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
   /catalog/blueprints.json:
     get:
       tags:
@@ -139,14 +139,14 @@ paths:
           $ref: '#/components/responses/ErrorInternalServerError'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      - name: blueprint_id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 123
+      parameters:
+        - name: blueprint_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
   '/catalog/blueprints/{blueprint_id}/print_providers.json':
     get:
       tags:
@@ -180,14 +180,14 @@ paths:
           $ref: '#/components/responses/ErrorInternalServerError'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      - name: blueprint_id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 123
+      parameters:
+        - name: blueprint_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
   /catalog/print_providers.json:
     get:
       tags:
@@ -250,14 +250,14 @@ paths:
           $ref: '#/components/responses/ErrorInternalServerError'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      - name: print_provider_id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 123
+      parameters:
+        - name: print_provider_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
   '/catalog/blueprints/{blueprint_id}/print_providers/{print_provider_id}/variants.json':
     get:
       tags:
@@ -266,8 +266,7 @@ paths:
       description: 'Retrieve a list of all variants of a blueprint from a specific print provider'
       operationId: getBlueprintVariantsList
       parameters:
-        -
-          name: show-out-of-stock
+        - name: show-out-of-stock
           in: query
           required: false
           schema:
@@ -275,6 +274,20 @@ paths:
             enum:
               - '0'
               - '1'
+        - name: blueprint_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
+        - name: print_provider_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
       responses:
         '200':
           description: 'List of all variants of a blueprint from a specific print provider'
@@ -299,21 +312,6 @@ paths:
           $ref: '#/components/responses/ErrorInternalServerError'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      - name: blueprint_id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 123
-      - name: print_provider_id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 123
   '/catalog/blueprints/{blueprint_id}/print_providers/{print_provider_id}/shipping.json':
     get:
       tags:
@@ -345,21 +343,21 @@ paths:
           $ref: '#/components/responses/ErrorInternalServerError'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      - name: blueprint_id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 123
-      - name: print_provider_id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 123
+      parameters:
+        - name: blueprint_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
+        - name: print_provider_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
   '/shops/{shop_id}/products.json':
     get:
       tags:
@@ -386,6 +384,13 @@ paths:
             default: 10
             maximum: 100
             minimum: 1
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
       responses:
         '200':
           description: 'List of products'
@@ -447,9 +452,14 @@ paths:
           $ref: '#/components/responses/ErrorBadRequest'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      -
-        $ref: '#/components/parameters/shopId'
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
   '/shops/{shop_id}/products/{product_id}.json':
     get:
       tags:
@@ -549,10 +559,19 @@ paths:
         '404':
           $ref: '#/components/responses/ErrorNotFound'
     parameters:
-      -
-        $ref: '#/components/parameters/shopId'
-      -
-        $ref: '#/components/parameters/productId'
+      - name: shop_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1234567
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: bfd8310b9f332e1243c7fffe9
   '/shops/{shop_id}/products/{product_id}/publish.json':
     post:
       tags:
