@@ -140,8 +140,13 @@ paths:
         '404':
           $ref: '#/components/responses/ErrorNotFound'
     parameters:
-      -
-        $ref: '#/components/parameters/blueprintId'
+      - name: blueprint_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 123
   '/catalog/blueprints/{blueprint_id}/print_providers.json':
     get:
       tags:
@@ -176,8 +181,13 @@ paths:
         '404':
           $ref: '#/components/responses/ErrorNotFound'
     parameters:
-      -
-        $ref: '#/components/parameters/blueprintId'
+      - name: blueprint_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 123
   /catalog/print_providers.json:
     get:
       tags:
@@ -241,8 +251,13 @@ paths:
         '404':
           $ref: '#/components/responses/ErrorNotFound'
     parameters:
-      -
-        $ref: '#/components/parameters/printProviderId'
+      - name: print_provider_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 123
   '/catalog/blueprints/{blueprint_id}/print_providers/{print_provider_id}/variants.json':
     get:
       tags:
@@ -285,10 +300,20 @@ paths:
         '404':
           $ref: '#/components/responses/ErrorNotFound'
     parameters:
-      -
-        $ref: '#/components/parameters/blueprintId'
-      -
-        $ref: '#/components/parameters/printProviderId'
+      - name: blueprint_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 123
+      - name: print_provider_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 123
   '/catalog/blueprints/{blueprint_id}/print_providers/{print_provider_id}/shipping.json':
     get:
       tags:
@@ -321,10 +346,20 @@ paths:
         '404':
           $ref: '#/components/responses/ErrorNotFound'
     parameters:
-      -
-        $ref: '#/components/parameters/blueprintId'
-      -
-        $ref: '#/components/parameters/printProviderId'
+      - name: blueprint_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 123
+      - name: print_provider_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 123
   '/shops/{shop_id}/products.json':
     get:
       tags:
@@ -333,10 +368,24 @@ paths:
       description: 'Retrieve the list of products in the specified shop'
       operationId: getProductsList
       parameters:
-        -
-          $ref: '#/components/parameters/page'
-        -
-          $ref: '#/components/parameters/limit'
+        - name: page
+          in: query
+          description: 'Paginate through the list of results'
+          required: false
+          schema:
+            type: integer
+            format: int64
+            default: 1
+        - name: limit
+          in: query
+          description: 'Results per page'
+          required: false
+          schema:
+            type: integer
+            format: int64
+            default: 10
+            maximum: 100
+            minimum: 1
       responses:
         '200':
           description: 'List of products'
