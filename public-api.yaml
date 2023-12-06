@@ -742,20 +742,20 @@ paths:
           $ref: '#/components/responses/ErrorBadRequest'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      - name: shop_id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 1234567
-      - name: product_id
-        in: path
-        required: true
-        schema:
-          type: string
-          example: bfd8310b9f332e1243c7fffe9
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: bfd8310b9f332e1243c7fffe9
   '/shops/{shop_id}/products/{product_id}/unpublish.json':
     post:
       tags:
