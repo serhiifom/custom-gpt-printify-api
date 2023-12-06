@@ -958,10 +958,24 @@ paths:
       description: 'Retrieve a list of uploaded files'
       operationId: getUploadsList
       parameters:
-        -
-          $ref: '#/components/parameters/page'
-        -
-          $ref: '#/components/parameters/limit'
+        - name: page
+          in: query
+          description: 'Paginate through the list of results'
+          required: false
+          schema:
+            type: integer
+            format: int64
+            default: 1
+        - name: limit
+          in: query
+          description: 'Results per page'
+          required: false
+          schema:
+            type: integer
+            format: int64
+            default: 10
+            maximum: 100
+            minimum: 1
       responses:
         '200':
           description: 'Uploaded files'
@@ -1016,8 +1030,12 @@ paths:
         '404':
           $ref: '#/components/responses/ErrorNotFound'
     parameters:
-      -
-        $ref: '#/components/parameters/imageId'
+      - name: image_id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 5e16d66791287a0006e522b2
   /uploads/images.json:
     post:
       tags:
@@ -1093,8 +1111,12 @@ paths:
         '404':
           $ref: '#/components/responses/ErrorNotFound'
     parameters:
-      -
-        $ref: '#/components/parameters/imageId'
+      - name: image_id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 5e16d66791287a0006e522b2
 components:
   schemas:
     ErrorBadRequest:
