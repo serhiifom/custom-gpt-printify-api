@@ -70,8 +70,13 @@ paths:
         '404':
           $ref: '#/components/responses/ErrorNotFound'
     parameters:
-      -
-        $ref: '#/components/parameters/shopId'
+      - name: shop_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1234567
   /catalog/blueprints.json:
     get:
       tags:
@@ -674,12 +679,24 @@ paths:
       description: 'Retrieve a list of orders in a specified shop'
       operationId: getOrdersList
       parameters:
-        -
-          $ref: '#/components/parameters/page'
-        -
-          $ref: '#/components/parameters/limit'
-        -
-          $ref: '#/components/parameters/shopId'
+        - name: page
+          in: query
+          description: 'Paginate through the list of results'
+          required: false
+          schema:
+            type: integer
+            format: int64
+            default: 1
+        - name: limit
+          in: query
+          description: 'Results per page'
+          required: false
+          schema:
+            type: integer
+            format: int64
+            default: 10
+            maximum: 100
+            minimum: 1
       responses:
         '200':
           description: 'List of orders'
@@ -776,11 +793,20 @@ paths:
           $ref: '#/components/responses/ErrorInternalServerError'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      -
-        $ref: '#/components/parameters/shopId'
-      -
-        $ref: '#/components/parameters/orderId'
+      parameters:
+        - name: "shop_id"
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
+        - name: "order_id"
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 1337e11d4a3f630515108aa8
   '/shops/{shop_id}/orders/{order_id}/send_to_production.json':
     post:
       tags:
@@ -814,11 +840,20 @@ paths:
           $ref: '#/components/responses/ErrorBadRequest'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      -
-        $ref: '#/components/parameters/shopId'
-      -
-        $ref: '#/components/parameters/orderId'
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 1337e11d4a3f630515108aa8
   '/shops/{shop_id}/orders/shipping.json':
     post:
       tags:
@@ -858,9 +893,14 @@ paths:
           $ref: '#/components/responses/ErrorBadRequest'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      -
-        $ref: '#/components/parameters/shopId'
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
   '/shops/{shop_id}/orders/{order_id}/cancel.json':
     post:
       tags:
@@ -896,9 +936,20 @@ paths:
           $ref: '#/components/responses/ErrorNotFound'
     parameters:
       -
-        $ref: '#/components/parameters/shopId'
+        name: shop_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1234567
       -
-        $ref: '#/components/parameters/orderId'
+        name: order_id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 1337e11d4a3f630515108aa8
   /uploads.json:
     get:
       tags:
