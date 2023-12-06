@@ -3,8 +3,7 @@ info:
   title: 'Printify API'
   version: 1.0.0
 servers:
-  -
-    url: 'https://api.printify.com/v1'
+  - url: 'https://api.printify.com/v1'
     description: 'Printify API'
 paths:
   /shops.json:
@@ -842,7 +841,250 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ShopOrders'
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    format: int64
+                    minimum: 1
+                  first_page_url:
+                    description: 'Relative link to the first page of the response'
+                    type: string
+                    example: '/?page=1'
+                  from:
+                    description: 'Index of the first item on the current response page'
+                    type: integer
+                    format: int64
+                    example: 1
+                  last_page:
+                    description: 'Number of the last page of the response'
+                    type: integer
+                    format: int64
+                    example: 10
+                  last_page_url:
+                    description: 'Relative link to the last page of the response'
+                    type: string
+                    example: '/?page=10'
+                  next_page_url:
+                    description: 'Relative link to the next page of the response'
+                    type: string
+                    example: '/?page=2'
+                    nullable: true
+                  path:
+                    type: string
+                    example: /
+                  per_page:
+                    description: 'Number of items returned per page of the response'
+                    type: integer
+                    format: int64
+                    default: 10
+                    maximum: 100
+                    minimum: 1
+                    example: 10
+                  prev_page_url:
+                    description: 'Relative link to the previous page of the response'
+                    type: string
+                    example: '/?page=1'
+                    nullable: true
+                  to:
+                    description: 'Index of the last item on the current response page'
+                    type: integer
+                    format: int64
+                    example: 10
+                  total:
+                    description: 'Total number of items in the response'
+                    type: integer
+                    format: int64
+                    example: 100
+                  data:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: string
+                          example: 1337e11d4a3f630515108aa8
+                        shop_id:
+                          type: integer
+                          format: int64
+                          example: 1234567
+                        address_to:
+                          properties:
+                            first_name:
+                              type: string
+                              example: John
+                            last_name:
+                              type: string
+                              example: Smith
+                            email:
+                              type: string
+                              format: email
+                              example: example@example.com
+                            phone:
+                              type: string
+                              example: '+555555555555'
+                            address1:
+                              type: string
+                              example: '108 West 13th Street'
+                            address2:
+                              type: string
+                              example: ''
+                            city:
+                              type: string
+                              example: Wilmington
+                            country:
+                              type: string
+                              example: US
+                            region:
+                              type: string
+                              example: DE
+                            zip:
+                              type: string
+                              example: '19801'
+                            company:
+                              type: string
+                              example: 'Printify, Inc.'
+                              nullable: true
+                          type: object
+                        line_items:
+                          type: array
+                          items:
+                            properties:
+                              quantity:
+                                type: integer
+                                format: int64
+                                example: 1
+                              product_id:
+                                type: string
+                                example: bfd8310b9f332e1243c7fffe9
+                              variant_id:
+                                type: integer
+                                format: int64
+                                example: 12345
+                              print_provider_id:
+                                type: integer
+                                format: int64
+                                example: 123
+                              shipping_cost:
+                                description: 'In 1/100th of a currency unit, for example: cents'
+                                type: integer
+                                format: int64
+                                example: 289
+                              cost:
+                                description: 'In 1/100th of a currency unit, for example: cents'
+                                type: integer
+                                format: int64
+                                example: 1489
+                              status:
+                                type: string
+                                enum:
+                                  - in-production
+                                  - bulk-in-production
+                                  - fulfilled
+                                  - canceled
+                                  - out_of_stock
+                                  - discontinued
+                                  - shipment_pre_transit
+                                  - shipment_in_transit
+                                  - shipment_out_for_delivery
+                                  - shipment_delivered
+                                  - shipment_return_to_sender
+                                  - shipment_failure
+                                  - shipment_cancelled
+                                  - shipment_error
+                              metadata:
+                                properties:
+                                  title:
+                                    type: string
+                                    example: 'My custom t-shirt'
+                                  price:
+                                    type: integer
+                                    format: int64
+                                    example: 2000
+                                  variant_label:
+                                    type: string
+                                    example: 'Antique Sapphire / S'
+                                  sku:
+                                    type: string
+                                    example: '12345678900987654321'
+                                  country:
+                                    description: 'Country of origin'
+                                    type: string
+                                    example: Canada
+                                type: object
+                              sent_to_production_at:
+                                type: string
+                                format: date-time
+                                example: '2022-06-29 11:00:00+0000'
+                            type: object
+                        metadata:
+                          properties:
+                            order_type:
+                              type: string
+                              enum:
+                                - sample
+                                - external
+                                - manual
+                                - api
+                                - csv-import-tool
+                            shop_fulfilled_at:
+                              description: 'RFC3339 datetime, `1970-01-01 00:00:00+00:00` if not fulfilled yet'
+                              type: string
+                              format: date-time
+                              example: '2022-06-29 11:00:00+0000'
+                          type: object
+                        total_price:
+                          description: 'In 1/100th of a currency unit, for example: cents'
+                          type: integer
+                          format: int64
+                          example: 5000
+                        total_shipping:
+                          description: 'In 1/100th of a currency unit, for example: cents'
+                          type: integer
+                          format: int64
+                          example: 2000
+                        total_tax:
+                          description: 'In 1/100th of a currency unit, for example: cents'
+                          type: integer
+                          format: int64
+                          example: 5000
+                        status:
+                          type: string
+                          enum:
+                            - pending
+                            - on-hold
+                            - cancelled
+                            - ready-for-production
+                            - sending-to-production
+                            - in-production
+                            - checking-quality
+                            - quality-declined
+                            - quality-approved
+                            - fulfilled
+                            - partially-fulfilled
+                            - payment-not-received
+                            - callback-received
+                            - has-issues
+                        shipping_method:
+                          description: '1 - standard shipping, 2 - express shipping'
+                          type: integer
+                          format: int64
+                          enum:
+                            - 1
+                            - 2
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2022-06-29 11:00:00+0000'
+                        sent_to_production_at:
+                          type: string
+                          format: date-time
+                          example: '2022-06-29 11:00:00+0000'
+                        fulfillment_type:
+                          type: string
+                          enum:
+                            - ordinary
+                            - prioritised
+                      type: object
         '401':
           $ref: '#/components/responses/ErrorUnauthorized'
         '403':
@@ -1072,16 +1314,14 @@ paths:
         '404':
           $ref: '#/components/responses/ErrorNotFound'
       parameters:
-        -
-          name: shop_id
+        - name: shop_id
           in: path
           required: true
           schema:
             type: integer
             format: int64
             example: 1234567
-        -
-          name: order_id
+        - name: order_id
           in: path
           required: true
           schema:
@@ -1186,10 +1426,8 @@ paths:
           application/json:
             schema:
               oneOf:
-                -
-                  $ref: '#/components/schemas/NewImageFromUrl'
-                -
-                  $ref: '#/components/schemas/NewImageFromContent'
+                - $ref: '#/components/schemas/NewImageFromUrl'
+                - $ref: '#/components/schemas/NewImageFromContent'
       responses:
         '200':
           description: 'Uploaded image'
@@ -1348,18 +1586,14 @@ components:
         name: Sizes
         type: size
         values:
-          -
-            id: 14
+          - id: 14
             title: S
-          -
-            id: 15
+          - id: 15
             title: M
-          -
-            id: 16
+          - id: 16
             title: L
       allOf:
-        -
-          $ref: '#/components/schemas/ProductOptionBase'
+        - $ref: '#/components/schemas/ProductOptionBase'
     ProductOptionSizeValue:
       properties:
         id:
@@ -1381,14 +1615,12 @@ components:
         name: Colors
         type: color
         values:
-          -
-            id: 1233
+          - id: 1233
             title: White
             colors:
               - '#F9F9F9'
       allOf:
-        -
-          $ref: '#/components/schemas/ProductOptionBase'
+        - $ref: '#/components/schemas/ProductOptionBase'
     ProductOptionColorValue:
       properties:
         id:
@@ -1547,26 +1779,20 @@ components:
           items:
             $ref: '#/components/schemas/ProductOptionBase'
           example:
-            -
-              name: Colors
+            - name: Colors
               type: color
               values:
-                -
-                  id: 1233
+                - id: 1233
                   title: White
-                  colors: ['#F9F9F9']
-            -
-              name: Sizes
+                  colors: [ '#F9F9F9' ]
+            - name: Sizes
               type: size
               values:
-                -
-                  id: 14
+                - id: 14
                   title: S
-                -
-                  id: 15
+                - id: 15
                   title: M
-                -
-                  id: 16
+                - id: 16
                   title: L
         variants:
           type: array
@@ -1682,10 +1908,8 @@ components:
     PrintProviderDetails:
       type: object
       allOf:
-        -
-          $ref: '#/components/schemas/PrintProviderListItem'
-        -
-          properties:
+        - $ref: '#/components/schemas/PrintProviderListItem'
+        - properties:
             blueprints:
               type: array
               items:
@@ -1760,11 +1984,9 @@ components:
           type: array
           items:
             anyOf:
-              -
-                type: string
+              - type: string
                 example: US
-              -
-                type: string
+              - type: string
                 enum:
                   - REST_OF_THE_WORLD
       type: object
@@ -1884,10 +2106,8 @@ components:
     ShopProducts:
       type: object
       allOf:
-        -
-          $ref: '#/components/schemas/PaginatedEnvelope'
-        -
-          properties:
+        - $ref: '#/components/schemas/PaginatedEnvelope'
+        - properties:
             data:
               type: array
               items:
@@ -1927,8 +2147,7 @@ components:
         - print_areas
       type: object
       allOf:
-        -
-          $ref: '#/components/schemas/ProductRequestBase'
+        - $ref: '#/components/schemas/ProductRequestBase'
     NewProductVariant:
       properties:
         id:
@@ -1998,8 +2217,7 @@ components:
     UpdatedProduct:
       type: object
       allOf:
-        -
-          $ref: '#/components/schemas/ProductRequestBase'
+        - $ref: '#/components/schemas/ProductRequestBase'
     PublishProductSettings:
       required:
         - title
@@ -2049,10 +2267,8 @@ components:
     ShopOrders:
       type: object
       allOf:
-        -
-          $ref: '#/components/schemas/PaginatedEnvelope'
-        -
-          properties:
+        - $ref: '#/components/schemas/PaginatedEnvelope'
+        - properties:
             data:
               type: array
               items:
@@ -2272,10 +2488,8 @@ components:
           type: array
           items:
             oneOf:
-              -
-                $ref: '#/components/schemas/NewOrderLineItemProductVariant'
-              -
-                $ref: '#/components/schemas/NewOrderLineItemSku'
+              - $ref: '#/components/schemas/NewOrderLineItemProductVariant'
+              - $ref: '#/components/schemas/NewOrderLineItemSku'
         shipping_method:
           description: 'Required to specify what method of shipping is desired. 1 - standard shipping, 2 - express shipping'
           type: integer
@@ -2289,10 +2503,8 @@ components:
         address_to:
           type: object
           allOf:
-            -
-              $ref: '#/components/schemas/OrderAddress'
-            -
-              required:
+            - $ref: '#/components/schemas/OrderAddress'
+            - required:
                 - first_name
                 - last_name
                 - email
@@ -2319,10 +2531,8 @@ components:
           example: 1
         print_areas:
           oneOf:
-            -
-              $ref: '#/components/schemas/NewOrderLineItemProductVariantPrintAreaMap'
-            -
-              type: array
+            - $ref: '#/components/schemas/NewOrderLineItemProductVariantPrintAreaMap'
+            - type: array
               items:
                 $ref: '#/components/schemas/NewOrderLineItemProductVariantPrintAreaListItem'
         print_details:
@@ -2452,10 +2662,8 @@ components:
     Uploads:
       type: object
       allOf:
-        -
-          $ref: '#/components/schemas/PaginatedEnvelope'
-        -
-          properties:
+        - $ref: '#/components/schemas/PaginatedEnvelope'
+        - properties:
             data:
               type: array
               items:
