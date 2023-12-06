@@ -491,6 +491,20 @@ paths:
           $ref: '#/components/responses/ErrorInternalServerError'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: bfd8310b9f332e1243c7fffe9
     put:
       tags:
         - Products
@@ -528,6 +542,20 @@ paths:
           $ref: '#/components/responses/ErrorBadRequest'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: bfd8310b9f332e1243c7fffe9
     delete:
       tags:
         - Products
@@ -558,20 +586,20 @@ paths:
           $ref: '#/components/responses/ErrorInternalServerError'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      - name: shop_id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 1234567
-      - name: product_id
-        in: path
-        required: true
-        schema:
-          type: string
-          example: bfd8310b9f332e1243c7fffe9
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: bfd8310b9f332e1243c7fffe9
   '/shops/{shop_id}/products/{product_id}/publish.json':
     post:
       tags:
@@ -610,11 +638,20 @@ paths:
           $ref: '#/components/responses/ErrorBadRequest'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      -
-        $ref: '#/components/parameters/shopId'
-      -
-        $ref: '#/components/parameters/productId'
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: bfd8310b9f332e1243c7fffe9
   '/shops/{shop_id}/products/{product_id}/publishing_succeeded.json':
     post:
       tags:
@@ -653,11 +690,20 @@ paths:
           $ref: '#/components/responses/ErrorBadRequest'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      -
-        $ref: '#/components/parameters/shopId'
-      -
-        $ref: '#/components/parameters/productId'
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: bfd8310b9f332e1243c7fffe9
   '/shops/{shop_id}/products/{product_id}/publishing_failed.json':
     post:
       tags:
@@ -697,10 +743,19 @@ paths:
         '404':
           $ref: '#/components/responses/ErrorNotFound'
     parameters:
-      -
-        $ref: '#/components/parameters/shopId'
-      -
-        $ref: '#/components/parameters/productId'
+      - name: shop_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1234567
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: bfd8310b9f332e1243c7fffe9
   '/shops/{shop_id}/products/{product_id}/unpublish.json':
     post:
       tags:
@@ -734,11 +789,20 @@ paths:
           $ref: '#/components/responses/ErrorBadRequest'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      -
-        $ref: '#/components/parameters/shopId'
-      -
-        $ref: '#/components/parameters/productId'
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: bfd8310b9f332e1243c7fffe9
   '/shops/{shop_id}/orders.json':
     get:
       tags:
@@ -827,9 +891,14 @@ paths:
           $ref: '#/components/responses/ErrorBadRequest'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      -
-        $ref: '#/components/parameters/shopId'
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
   '/shops/{shop_id}/orders/{order_id}.json':
     get:
       tags:
@@ -1002,22 +1071,22 @@ paths:
           $ref: '#/components/responses/ErrorBadRequest'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      -
-        name: shop_id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 1234567
-      -
-        name: order_id
-        in: path
-        required: true
-        schema:
-          type: string
-          example: 1337e11d4a3f630515108aa8
+      parameters:
+        -
+          name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1234567
+        -
+          name: order_id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 1337e11d4a3f630515108aa8
   /uploads.json:
     get:
       tags:
@@ -1097,13 +1166,13 @@ paths:
           $ref: '#/components/responses/ErrorInternalServerError'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      - name: image_id
-        in: path
-        required: true
-        schema:
-          type: string
-          example: 5e16d66791287a0006e522b2
+      parameters:
+        - name: image_id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 5e16d66791287a0006e522b2
   /uploads/images.json:
     post:
       tags:
@@ -1178,13 +1247,13 @@ paths:
           $ref: '#/components/responses/ErrorBadRequest'
         '404':
           $ref: '#/components/responses/ErrorNotFound'
-    parameters:
-      - name: image_id
-        in: path
-        required: true
-        schema:
-          type: string
-          example: 5e16d66791287a0006e522b2
+      parameters:
+        - name: image_id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 5e16d66791287a0006e522b2
 components:
   schemas:
     ErrorBadRequest:
